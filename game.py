@@ -1,16 +1,19 @@
 from player import Player
 from ai import AI
+from validation import Validator
 
 class Game:
     def __init__(self):
-        self.display_welcome()
-        self.display_rules()
-        self.run_game()
         self.ai = True
         self.rounds = int
-
+        self.validator = Validator()
+        self.prompt = self.validator.auto_valid
 
     def run_game(self):
+        self.display_welcome()
+        self.display_rules()
+        value = self.prompt('What', self.validator.auto_valid)
+        print(value)
 
         self.display_winner()
     def display_welcome(self):

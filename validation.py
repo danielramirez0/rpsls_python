@@ -47,3 +47,6 @@ class Validator:
             return True
         else:
             return False
+
+    def auto_valid(self, a):
+        return a == a
