@@ -50,3 +50,15 @@ class Validator:
 
     def auto_valid(self, a):
         return a == a
+
+    def is_odd(self, num1):
+        try:
+            int(num1)
+        except:
+            print('Only enter numbers')
+            return False
+        if num1 % 2 !=  0:
+            return True
+        else:
+            print(f'Number must be an odd number')
+            return False
