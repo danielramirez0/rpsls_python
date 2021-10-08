@@ -1,13 +1,19 @@
+from getpass import getpass
+
+
 class Validator:
     def __init__(self):
         pass
 
     # Function for prompting for user input, accepts a callback and options to include up to two optional parameters in callback call
-    def prompt_input(self, question, callback, opt_param_1 = False, opt_param_2 = False ):
+    def prompt_input(self, question, callback, secret=True, opt_param_1=False, opt_param_2=False):
         isValid = False
         response = ""
         while(not isValid or response == ""):
-            response = input(question)
+            if secret:
+                response = getpass(question)
+            else:
+                response = input(question)
             if opt_param_1 and opt_param_2:
                 isValid = callback(response, opt_param_1, opt_param_2)
             elif opt_param_1:
@@ -41,7 +47,7 @@ class Validator:
         else:
             print(f"Selection must be between {a} and {b}")
             return False
-    
+
     def element_in(self, element, arr):
         if (element) in arr:
             return True
@@ -57,7 +63,7 @@ class Validator:
         except:
             print('Only enter numbers')
             return False
-        if num1 % 2 !=  0:
+        if int(num1) % 2 != 0:
             return True
         else:
             print(f'Number must be an odd number')

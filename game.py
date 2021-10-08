@@ -1,4 +1,4 @@
-from player import Player
+from human import Human
 from ai import AI
 from validation import Validator
 
@@ -30,17 +30,20 @@ class Game:
         print('The game RPSLS is just like Rock Paper Scissors, however there are now five options to choose from!\nRules:\nRock beats Scissor and Lizard\nPaper beats Rock and Spock\nScissor beats Paper and Lizard\nLizard beats Spock and Paper\nSpock beats Scissors and Rock')
 
     def get_mode(self):
-        ai_on_off = self.prompt('Please select you game mode:\n1: Play versus an AI\n2: Play against a friend', self.validator.number_between, 1 , 2)
+        ai_on_off = self.prompt('Please select you game mode:\n1: Play versus an AI\n2: Play against a friend\n', self.validator.number_between, False, 1 , 2)
         if ai_on_off == 2:
             self.ai = False
 
     def round_count(self):
-        self.rounds = self.prompt('How many rounds would you like to play?', self.validator.is_odd)
+        self.rounds = self.prompt('How many rounds would you like to play?\n', self.validator.is_odd, False)
 
     def start(self):
-        player_one = Player(self.prompt('Player 1, enter your name: ', self.validator.auto_valid))
+        player_one = Human(self.prompt('Player 1, enter your name: ', self.validator.auto_valid, False))
         if self.ai == True:
-            player_two = AI()
+            player_two = AI("BOT")
         else:
-            player_two = Player('Player 2, enter your name: ', self.validator.auto_valid))
+            player_two = Human('Player 2, enter your name: ', self.validator.auto_valid, False)
         
+        while True:
+            print(f"{player_one.select_gesture().name}")
+            print(f'{player_two.select_gesture().name}')
