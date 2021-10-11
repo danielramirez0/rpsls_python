@@ -1,16 +1,16 @@
 from human import Human
 from ai import AI
-from validation import Validator
+from prompt import prompt_input
+import validation as validator
+
 
 class Game:
     def __init__(self):
-        self.ai = True
+        self.use_ai = True
         self.rounds = int
-        self.validator = Validator()
-        self.prompt = self.validator.prompt_input
         self.winner = str
-        self.player_one_score = 0
-        self.player_two_score = 0
+        self.player_one_score = int
+        self.player_two_score = int
 
     def run_game(self):
         self.display_welcome()
@@ -30,20 +30,24 @@ class Game:
         print('The game RPSLS is just like Rock Paper Scissors, however there are now five options to choose from!\nRules:\nRock beats Scissor and Lizard\nPaper beats Rock and Spock\nScissor beats Paper and Lizard\nLizard beats Spock and Paper\nSpock beats Scissors and Rock')
 
     def get_mode(self):
-        ai_on_off = self.prompt('Please select you game mode:\n1: Play versus an AI\n2: Play against a friend\n', self.validator.number_between, False, 1 , 2)
-        if ai_on_off == 2:
-            self.ai = False
+        msg = 'Please select you game mode:\n1: Play versus an AI\n2: Play against a friend\n'
+        game_mode = prompt_input(msg, validator.number_between, 1, 2)
+        if game_mode == "2":
+            self.use_ai = False
 
     def round_count(self):
-        self.rounds = int(self.prompt('How many rounds would you like to play?\n', self.validator.is_odd, False))
+        self.rounds = int(prompt_input(
+            'How many rounds would you like to play?\n', validator.is_odd))
 
     def start(self):
-        player_one = Human(self.prompt('Player 1, enter your name: ', self.validator.auto_valid, False))
-        if self.ai == True:
+        player_one = Human(prompt_input(
+            'Player 1, enter your name: ', validator.auto_valid))
+        if self.use_ai == True:
             player_two = AI("BOT")
         else:
-            player_two = Human('Player 2, enter your name: ', self.validator.auto_valid, False)
-        
+            player_two = Human(prompt_input(
+                'Player 2, enter your name: ', validator.auto_valid))
+
         while True:
             player_one_choice = player_one.select_gesture()
             player_two_choice = player_two.select_gesture()

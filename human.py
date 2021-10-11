@@ -1,18 +1,18 @@
 from player import Player
-from validation import Validator
+from validation import number_between
+from prompt import prompt_input
+
 
 class Human(Player):
     def __init__(self, name):
         self.name = name
-        self.validator = Validator()
-        self.prompt = self.validator.prompt_input
         super().__init__()
 
     def select_gesture(self):
-        print('Select your gesture')
+        print(f'{self.name}, select your gesture')
         i = 1
         for gesture in self.gestures:
             print(f'{i}: {gesture.name}')
             i += 1
-        selection = int(self.prompt("", self.validator.number_between, True, 1, 5)) - 1
+        selection = int(prompt_input("", number_between, 1, 5, secret=True)) - 1
         return self.gestures[selection]
