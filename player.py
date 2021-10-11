@@ -9,4 +9,8 @@ class Player:
             Gesture('lizard', ['paper', 'spock'], ['scissors', 'rock']), 
             Gesture('spock', ['scissors', 'rock'], ['lizard', 'paper']), 
             ]
-    
+        self.score = 0
+
+    def increase_score(self):
+        self.score += 1
+
