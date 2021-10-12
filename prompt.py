@@ -1,18 +1,14 @@
 from getpass import getpass
 
-# Function for prompting for user input, accepts a callback and options to include up to two optional parameters in callback call
-def prompt_input(question, callback, opt_param_1=False, opt_param_2=False, secret=False):
+
+def prompt_input(question, callback, *args, secret=False):
+    """Custom prompt function used to validate user input.\nAny number of parameters are optional for callback flexibility.\nUse parameter keyword 'secret = True' syntax for masking user input."""
     isValid = False
     response = ""
     while(not isValid or response == ""):
-        if secret:
+        if secret == True:
             response = getpass(question)
         else:
             response = input(question)
-        if opt_param_1 and opt_param_2:
-            isValid = callback(response, opt_param_1, opt_param_2)
-        elif opt_param_1:
-            isValid = callback(response, opt_param_1)
-        else:
-            isValid = callback(response)
+        isValid = callback(response, *args)
     return response
